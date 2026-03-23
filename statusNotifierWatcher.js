@@ -179,7 +179,7 @@ export class StatusNotifierWatcher {
 
                 if (ids.every(id => !this._items.has(id))) {
                     const service = services.find(s =>
-                        s && s.startsWith('org.kde.StatusNotifierItem')) || services[0];
+                        s?.startsWith('org.kde.StatusNotifierItem')) ?? services[0];
                     const id = Util.indicatorId(
                         path === DEFAULT_ITEM_OBJECT_PATH ? service : null,
                         name, path);
