@@ -98,6 +98,7 @@ export class StatusNotifierWatcher {
 
         try {
             const indicator = new AppIndicator.AppIndicator(service, busName, objPath);
+            const cancellable = this._cancellable;
             this._items.set(id, indicator);
             indicator.connect('destroy', () => this._onIndicatorDestroyed(indicator));
 
@@ -105,7 +106,7 @@ export class StatusNotifierWatcher {
                 if (!indicator.hasNameOwner) {
                     try {
                         await new PromiseUtils.TimeoutPromise(500,
-                            GLib.PRIORITY_DEFAULT, this._cancellable);
+                            GLib.PRIORITY_DEFAULT, cancellable);
                         if (this._items.has(id) && !indicator.hasNameOwner)
                             indicator.destroy();
                     } catch (e) {
